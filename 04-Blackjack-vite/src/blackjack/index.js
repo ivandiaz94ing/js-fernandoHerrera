@@ -1,6 +1,10 @@
-import _ from 'underscore';
-import {crearDeck} from '../blackjack/usecases/crear-derk';
 
+import _ from 'underscore';
+import {crearDeck} from './usecases/crear-derk';
+//import cualquierNombreDeExportar from './usecases/crear-derk'
+
+//Crear alias a una funcion
+//import {crearDeck as crearNuevoDerk } from './usecases/crear-derk';
 
 //Patrón Módulo
 //forma 1
@@ -23,6 +27,7 @@ const miJuego = (() => {
 
   //Esta Funcion inicializa el juego
   const inicializarJuego = (numJugadores = 2 ) => {
+ // derk = cualquierNombreDeExportar(tipos, letras);
   derk = crearDeck(tipos, letras);
   console.log(`N Jugadores: ${numJugadores}`);
   puntosJugadores = [];
@@ -48,6 +53,7 @@ const miJuego = (() => {
       return derk.pop();
   }
 
+
   const valorCarta = (carta) => {
       const valor = carta.substring(0, carta.length - 1);
 
@@ -57,12 +63,15 @@ const miJuego = (() => {
                   valor === 'Q' ? 12 : 11;
   }
 
+
   const acumularPuntos = (turno, carta) => {
       console.log(`Turno: ${turno}`);
       puntosJugadores[turno] += valorCarta(carta);
       puntosHTML[turno].innerText = puntosJugadores[turno];
       return puntosJugadores[turno];
   }
+
+
   const mostrarCarta = (jugador, carta) => {
           const imaCarta = document.createElement('img');
           imaCarta.src = `assets/cartas/${carta}.png`;
@@ -135,6 +144,7 @@ const miJuego = (() => {
       inicializarJuego();
   });
 
+  //Haciendo publico la funcion de nuevoJuego
   return {
       nuevoJuego : inicializarJuego 
 

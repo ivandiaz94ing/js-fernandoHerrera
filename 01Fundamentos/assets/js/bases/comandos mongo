@@ -1,0 +1,8 @@
+ Iniciar mongo ***mongod***
+ mostrar las bases de datos ***show dbs***
+ mostrar la bd en la que estamos  ***db***
+ crear una bases de datos ***use nombre_bd***
+ insertar un solo objeto ***db.coleccion.insertOne({"name": "valor"})
+ insertar un varios objetos ***db.coleccion.insertMany(
+ {"name": "valor"},
+ {"otronombre": "otro valor"})
