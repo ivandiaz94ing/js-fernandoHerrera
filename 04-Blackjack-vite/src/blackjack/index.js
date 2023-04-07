@@ -1,13 +1,9 @@
 
 import _ from 'underscore';
-import {crearDeck} from './usecases/crear-derk';
-//import cualquierNombreDeExportar from './usecases/crear-derk'
-
-//Crear alias a una funcion
-//import {crearDeck as crearNuevoDerk } from './usecases/crear-derk';
+import {crearDeck, pedirCarta, acumularPuntos, turnoComputadora, mostrarCarta} from './usecases/index';
 
 //Patrón Módulo
-//forma 1
+
 const miJuego = (() => {
   'use strict'
   let derk = [];
@@ -44,71 +40,11 @@ const miJuego = (() => {
   divCartas.forEach(elem => elem.innerText = ['']);
   }
 
-
-  //Esta funcion me permite tomar una nueva carta
- 
-
-
-  const valorCarta = (carta) => {
-      const valor = carta.substring(0, carta.length - 1);
-
-      return (!isNaN(valor)) ? valor * 1 :
-          valor === 'A' ? 14 :
-              valor === 'K' ? 13 :
-                  valor === 'Q' ? 12 : 11;
-  }
-
-
-  const acumularPuntos = (turno, carta) => {
-      console.log(`Turno: ${turno}`);
-      puntosJugadores[turno] += valorCarta(carta);
-      puntosHTML[turno].innerText = puntosJugadores[turno];
-      return puntosJugadores[turno];
-  }
-
-
-  const mostrarCarta = (jugador, carta) => {
-          const imaCarta = document.createElement('img');
-          imaCarta.src = `assets/cartas/${carta}.png`;
-          imaCarta.classList.add('carta');
-          divCartas[jugador].append(imaCarta);
-  }
-
-  //DETERMINAR GANADOR
-  const determinarGanador = () => {
-      setTimeout(() => {
-
-          if (puntosJugadores[0] > 21) {
-              alert('Ganó la Computadora');
-          } else if ((puntosJugadores[1] < puntosJugadores[0]) || (puntosJugadores[1] > 21)) {
-              alert('Genial Ganaste');
-          } else if (puntosJugadores[1] > puntosJugadores[0]) {
-              alert('Ganó la Computadora');
-
-          } else {
-              alert('Wauooo Excelente Guerreros hay un empate');
-
-          }
-      }, 500);
-  }
-
-  //Turno de la computadora
-  const turnoComputadora = () => {
-      do {
-          const carta = pedirCarta();
-          acumularPuntos((puntosJugadores.length -1 ), carta);
-          mostrarCarta(puntosJugadores.length -1,carta)
-
-      } while ((puntosJugadores[1] < puntosJugadores[0]) && (puntosJugadores[0] <= 21));
-      
-      determinarGanador();
-  }
-
   //Eventos
   btnPedir.addEventListener('click', () => {
 
-      const carta = pedirCarta();
-      const puntosJugador = acumularPuntos(0, carta)
+      const carta = pedirCarta(derk);
+      const puntosJugador = acumularPuntos(puntosJugadores ,0, carta)
 
       mostrarCarta(0, carta);
 
@@ -116,14 +52,14 @@ const miJuego = (() => {
           console.warn('Lo siento, Perdiste');
           btnPedir.disabled = true;
           btnDetener.disabled = true;
-          turnoComputadora();
+          turnoComputadora(puntosJugadores,derk);
 
       } else if (puntosJugador === 21) {
           console.warn('21, Genial!!');
           btnPedir.disabled = true;
           btnDetener.disabled = true;
 
-          turnoComputadora();
+          turnoComputadora(puntosJugadores,derk);
       }
   });
 
@@ -131,7 +67,7 @@ const miJuego = (() => {
   btnDetener.addEventListener('click', () => {
       btnPedir.disabled = true;
       btnDetener.disabled = true;
-      turnoComputadora();
+      turnoComputadora(puntosJugadores, derk);
   });
 
   //NUEVO JUEGO
