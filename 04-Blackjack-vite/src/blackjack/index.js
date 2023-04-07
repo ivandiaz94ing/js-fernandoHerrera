@@ -46,12 +46,7 @@ const miJuego = (() => {
 
 
   //Esta funcion me permite tomar una nueva carta
-  const pedirCarta = () => {
-      if (derk.length === 0) {
-          throw 'No hay cartas'
-      }
-      return derk.pop();
-  }
+ 
 
 
   const valorCarta = (carta) => {
